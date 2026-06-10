@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  - name: fct_orders
+    description: "Fact table for orders and payments"
+    config:
+      materialized: table
+    columns:
+      - name: order_id
+        description: "The order ID"
+      - name: customer_id
+        description: "The customer ID"
+      - name: order_date
+        description: "The order date"
+      - name: payment_amount
+        description: "The payment amount"

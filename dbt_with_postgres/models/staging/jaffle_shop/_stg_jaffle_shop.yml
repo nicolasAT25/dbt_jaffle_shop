@@ -1,0 +1,54 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: "Staging customers table"
+    config:
+      #source: jaffle_shop
+      schema: staging
+      materialized: view
+    columns:
+      - name: customer_id
+        description: "The customer ID"
+        data_tests:
+          - unique
+          - not_null
+      - name: first_name
+        description: "The first name of the customer"
+      - name: last_name
+        description: "The last name of the customer"
+
+  - name: stg_orders
+    description: "Staging orders table"
+    config:
+      #source: jaffle_shop
+      schema: staging
+      materialized: view
+    columns:
+      - name: order_id
+        description: "The order ID"
+        data_tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: "The user ID"
+        data_tests:
+          - relationships:
+              arguments:
+                field: customer_id
+                to: ref('jaffle_shop_staging.stg_customers')
+      - name: order_date
+        description: "The order date"
+      - name: order_status
+        description: "{{ doc('order_status') }}"
+        data_tests:
+          - accepted_values:
+              arguments:
+                values:
+                  - placed
+                  - shipped
+                  - completed
+                  - return_pending
+                  - returned
+      - name: _etl_loaded_at
+        description: "The ETL loaded at timestamp"

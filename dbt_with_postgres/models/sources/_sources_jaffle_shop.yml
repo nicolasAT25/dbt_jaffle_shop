@@ -1,0 +1,49 @@
+version: 2
+
+sources:
+  - name: raw
+    description: PostgreSQL database for Jaffle Shop
+    database: jaffle_shop
+    schema: raw
+    tables:
+      - name: customers
+        description: "The customers table"
+        columns:
+        - name: id
+          data_tests:
+            - unique
+            - not_null
+        - name: first_name
+          description: "The first name of the customer"
+        - name: last_name
+          description: "The last name of the customer"
+      
+      - name: orders
+        description: "The orders table"
+        config:
+          loaded_at_field: _etl_loaded_at
+          freshness:
+            warn_after:
+              count: 6
+              period: hour
+            error_after:
+              count: 12
+              period: hour
+        columns:
+        - name: id
+          data_tests:
+            - unique
+            - not_null
+        - name: user_id
+        - name: order_date
+        - name: status
+        - name: _etl_loaded_at
+
+      - name: payments
+        description: "The payments table"
+        columns:
+        - name: id
+        - name: order_id
+        - name: payment_method
+        - name: amount
+        - name: _batched_at

@@ -1,0 +1,22 @@
+version: 2
+
+models:
+  - name: fct_customers_orders
+    description: "Fact table for customers and orders"
+    config:
+      materialized: table
+    columns:
+      - name: customer_id
+        description: "The customer ID"
+      - name: first_name
+        description: "The first name of the customer"
+      - name: last_name
+        description: "The last name of the customer"
+      - name: first_order_date
+        description: "The date of the first order"
+      - name: most_recent_order_date
+        description: "The date of the most recent order"
+      - name: number_of_orders
+        description: "The number of orders"
+      - name: lifetime_value
+        description: total amount a customer has spent at jaffle_shop

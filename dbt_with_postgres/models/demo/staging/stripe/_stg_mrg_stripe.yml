@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: stg_mrg_payments
+    description: "Staging payments table"
+    
+    columns:
+      - name: payment_id
+        description: "The payment ID"
+      - name: order_id
+        description: "The order ID"
+      - name: payment_method
+        description: "The payment method"
+      - name: payment_amount
+        description: "The payment amount"
+      - name: _batched_at
+        description: "The batch date"

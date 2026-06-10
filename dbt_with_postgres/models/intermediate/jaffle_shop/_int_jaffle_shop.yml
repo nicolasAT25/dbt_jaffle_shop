@@ -1,0 +1,42 @@
+version: 2
+
+models:
+  - name: int_customers_daily_summary
+    description: "Staging customers table"
+    config:
+      schema: intermediate
+      materialized: table
+    columns:
+      - name: customer_id
+        description: "The customer ID"
+        data_tests:
+          - unique
+          - not_null
+      - name: order_date
+        description: "The order date"
+      - name: primary_key
+        description: "Surrogate PK"
+      - name: count_orders
+        description: "Orders count by customer_id and order_date"
+  
+  - name: int_orders_pivoted
+    description: "Staging customers table"
+    config:
+      schema: intermediate
+      materialized: table
+    columns:
+      - name: order_id
+        description: "The order ID"
+        data_tests:
+          - unique
+          - not_null
+      - name: cupon_amount
+        description: "Cupon amoun for the order"
+      - name: cupon_amount
+        description: "Cupon amoun for the order"
+      - name: credit_card_amount
+        description: "Credit card amoun for the order"
+      - name: bank_transfer_amount
+        description: "Bank transfer amoun for the order"
+      - name: gidt_card_amount
+        description: "Gift card amoun for the order"

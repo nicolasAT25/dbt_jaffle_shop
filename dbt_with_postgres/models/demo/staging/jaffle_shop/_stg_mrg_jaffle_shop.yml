@@ -1,0 +1,32 @@
+version: 2
+
+models:
+  - name: stg_mrg_customers
+    description: "Staging customers table"
+
+    columns:
+      - name: customer_id
+        description: "The customer ID"
+      - name: givenname
+        description: "The giveinname of the customer"
+      - name: surname
+        description: "The surname of the customer"
+      - name: fullname
+        description: "The fullname of the customer"
+
+  - name: stg_mrg_orders
+    description: "Staging orders table"
+    
+    columns:
+      - name: user_order_seq
+        description: "The user sequence based on the order date"
+      - name: order_id
+        description: "The order ID"
+      - name: customer_id
+        description: "The user ID"
+      - name: order_date
+        description: "The order date"
+      - name: order_status
+        description: "{{ doc('order_status') }}"
+      - name: _etl_loaded_at
+        description: "The ETL loaded at timestamp"
