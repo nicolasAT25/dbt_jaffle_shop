@@ -12,7 +12,7 @@ with customers as (
 
 -----------------------
 
-customer_orders as (
+, customer_orders as (
   select 
     orders.*,
     customers.full_name,
@@ -36,26 +36,28 @@ customer_orders as (
       partition by orders.customer_id
     ) as customer_order_count,
 
-    --coalesce(count(case when orders.order_status not in ('returned','return_pending') then 1 end),0) as non_returned_order_count,
-    sum(nvl2(orders.valid_order_date, 1, 0)) over(
+    coalesce(count(case when orders.order_status not in ('returned') then 1 end) over(partition by orders.customer_id),1) as customer_non_returned_order_count,
+    /*sum(nvl2(orders.valid_order_date, 1, 0)) over(
       partition by orders.customer_id
-    ) as customer_non_returned_order_count,
+    ) as customer_non_returned_order_count,*/
 
-    --sum(case when orders.order_status not in ('returned','return_pending') then orders.total_amount_paid else 0 end) as total_lifetime_value,
-    sum(nvl2(orders.valid_order_date, orders.total_amount_paid, 0)) over(
+    sum(case when orders.order_status not in ('returned','return_pending') then orders.total_amount_paid else 0 end) over(partition by orders.customer_id) as customer_total_lifetime_value,
+    /*sum(nvl2(orders.valid_order_date, orders.total_amount_paid, 0)) over(
       partition by orders.customer_id
-    ) as customer_total_lifetime_value,
+    ) as customer_total_lifetime_value,*/
 
-    array_agg(distinct orders.order_id) over(
+    array_agg(orders.order_id) over(
       partition by orders.customer_id
     ) as customer_order_ids
 
   from orders
   inner join customers
     on orders.customer_id = customers.customer_id
+
+  where orders.order_status not in ('return_paending', 'returned')
 )
 
-, average_customer_order_totals (
+, average_customer_order_totals as (
     select
         customer_orders.*,
         customer_orders.customer_total_lifetime_value / customer_non_returned_order_count as avg_non_returned_order_value

@@ -9,27 +9,6 @@ with orders as (
     select * from {{ ref('stg_mrg_payments')}}
 )
 
-/*
-, order_totals as (
-    select
-        order_id,
-        payment_method,
-        sum(payment_amount) as order_value_dollars
-    from payments
-    group by order_id, payment_method
-)
-
-, order_value_joined as (
-    select
-        o.*,
-        ot.order_value_dollars,
-        ot.payment_method
-
-    from orders o
-        left join order_totals ot on o.order_id = ot.order_id
-)
-*/
-
 , completed_payments as (
     select 
         orders.order_id,
