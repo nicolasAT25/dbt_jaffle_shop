@@ -240,3 +240,23 @@ dbt source freshness
 dbt docs generate
 dbt docs serve
 ```
+
+---
+
+## Refactoring SQL for Modularity
+
+Inside `models/demos` directory there is an example of how to migrate code from "classic" SQL to a `dbt` style. This refactoring includes:
+
+- Save legacy code
+- Implement sources
+- Cosmetic cleanup (indentation, lower case consistency)
+- CTE groupings
+- Auditing
+  - `audit_helper`
+    - compare_all_columns
+    - compare_row_counts
+  - `custom audit`
+    - discrepancies
+- User-Defined Functions (UDFs)
+  - Create an UDF in dbt
+  - Import an UDF data platform (`Postgres`)

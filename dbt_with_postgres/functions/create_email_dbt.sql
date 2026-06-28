@@ -1,0 +1,1 @@
+select lower(first_name) || '.' || id::varchar || 'companyname.com'

@@ -67,3 +67,6 @@ models:
       marts:
         +schema: migration_marts
         +materialized: table
+      audits:
+        +schema: audits
+        +materialized: view

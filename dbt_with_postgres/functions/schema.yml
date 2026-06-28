@@ -1,0 +1,28 @@
+functions:
+  - name: safe_divide       # required
+    description: My UDF that safely divide two numbers, returning null if the denominator is null. # optional
+    #config:
+      #schema: udf_schema
+      #database: udf_db
+      #volatility: deterministic
+    arguments:                  # optional
+      - name: numerator          # required if arguments is specified
+        data_type: bigint       # required if arguments is specified
+        #description: ...
+        #default_value: "'1'"    # optional, available in Snowflake and Postgres
+      - name: denominator          # required if arguments is specified
+        data_type: bigint       # required if arguments is specified
+        #description: ...
+        #default_value: "'1'"    # optional, available in Snowflake and Postgres
+    returns:                    # required
+      data_type: float        # required
+  
+  - name: create_email_dbt       # required
+    description: My UDF that creates an email address from a given name and an id.
+    arguments:                  
+      - name: first_name          
+        data_type: varchar
+      - name: id          
+        data_type: numeric(38,0)
+    returns:
+      data_type: varchar

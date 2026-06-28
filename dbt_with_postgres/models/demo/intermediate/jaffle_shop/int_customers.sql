@@ -60,7 +60,10 @@ with customers as (
 , average_customer_order_totals as (
     select
         customer_orders.*,
-        customer_orders.customer_total_lifetime_value / customer_non_returned_order_count as avg_non_returned_order_value
+        {{ function('safe_divide') }}(
+          customer_orders.customer_total_lifetime_value::bigint, 
+          customer_non_returned_order_count::bigint
+          ) as avg_non_returned_order_value
     from customer_orders
 )
 
